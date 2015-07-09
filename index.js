@@ -3,7 +3,6 @@ var async = require('async');
 var exec = require('child_process').exec;
 var gutil = require('gulp-util');
 var path = require('path');
-var through = require('through2');
 var through_concurrent = require('through2-concurrent');
 
 var PLUGIN_NAME = 'gulp-async-shell'
