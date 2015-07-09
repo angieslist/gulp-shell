@@ -58,6 +58,12 @@ describe('gulp-shell(commands, options)', function () {
     stream.write(fakeFile)
   })
 
+  it('can log with file data', function(done){
+    var stream = shell([''],{logMessage:'templating with <%= file.relative %>'})
+    expectToOutput('test-file',done);
+    stream.write(fakeFile);
+  })
+
   it('prepends `./node_modules/.bin` to `PATH`', function (done) {
     var stream = shell(['echo $PATH'])
 
@@ -142,6 +148,16 @@ describe('gulp-shell(commands, options)', function () {
           expect(error.message).to.equal(expectedMessage)
           done()
         })
+
+        stream.write(fakeFile)
+      })
+    })
+
+    describe('logMessage', function () {
+      it('sets the current working directory when `cwd` is a string and print a logMessage', function (done) {
+        var stream = shell(['pwd'], {cwd: '..', logMessage: 'building'})
+
+        expectToOutput(join(__dirname, '../..'), done)
 
         stream.write(fakeFile)
       })
