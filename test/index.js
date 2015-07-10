@@ -3,7 +3,8 @@
 var gutil = require('gulp-util')
 var join = require('path').join
 var expect = require('chai').expect
-
+var async = require('async')
+var sinon = require('sinon')
 var shell = require('..')
 
 var originalStdoutWrite = process.stdout.write
@@ -60,8 +61,8 @@ describe('gulp-shell(commands, options)', function () {
 
   it('can log with file data', function(done){
     var stream = shell([''],{logMessage:'templating with <%= file.relative %>'})
-    expectToOutput('test-file',done);
-    stream.write(fakeFile);
+    expectToOutput('test-file',done)
+    stream.write(fakeFile)
   })
 
   it('prepends `./node_modules/.bin` to `PATH`', function (done) {
@@ -149,6 +150,20 @@ describe('gulp-shell(commands, options)', function () {
           done()
         })
 
+        stream.write(fakeFile)
+      })
+    })
+
+    describe('async', function () {
+      it('verifies tasks are run in parallel', function (done) {
+        var spy = sinon.spy(async,"parallel")
+        var stream = shell(['pwd', 'echo ls'])
+        stream.on('data', function () {
+          // get the first call's first argument, eg the array of functions to execute asynchronously
+          expect(spy.args[0][0].length == 2)
+          async.parallel.restore()
+          done()
+        })
         stream.write(fakeFile)
       })
     })
