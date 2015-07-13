@@ -36,9 +36,7 @@ function genShellExecFunction(command,file,options,callback){
     }
     if(!options.quiet && options.logMessage){
       var date = new Date()
-      var hours = date.getHours()
-      var hourStr = hours <= 9 ? "0"+hours : ""+hours
-      var time = hourStr+":"+date.getMinutes()+":"+date.getSeconds()
+      var time = ('0' + date.getHours()).slice(-2) + ':' +  ('0' + date.getMinutes()).slice(-2) + ':' +  ('0' + date.getSeconds()).slice(-2);
       var compiledTemplate = _.template(options.logMessage)
       templatedMessage = compiledTemplate({'file':file})
       console.log("["+time+"] "+ templatedMessage)
@@ -91,7 +89,7 @@ function shell(commands, options) {
 
     var tasks = commands.map(function(cmd){
       return genShellExecFunction.bind(null,cmd,file,options)
-    })
+    });
 
     async.parallel(tasks, function (error, result) {
       if (error) {
