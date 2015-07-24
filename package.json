@@ -1,7 +1,7 @@
 {
-  "name": "gulp-shell",
+  "name": "gulp-async-shell",
   "version": "0.4.2",
-  "description": "A handy command line interface for gulp",
+  "description": "A handy command line interface for gulp now with async goodness",
   "main": "index.js",
   "scripts": {
     "test": "gulp test lint",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sun-zheng-an/gulp-shell"
+    "url": "https://github.com/angieslist/gulp-shell"
   },
   "keywords": [
     "gulpplugin",
@@ -17,12 +17,12 @@
     "shell",
     "command"
   ],
-  "author": "Sun Zheng'an",
+  "author": "Angieslist",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sun-zheng-an/gulp-shell/issues"
+    "url": "https://github.com/angieslist/gulp-shell/issues"
   },
-  "homepage": "https://github.com/sun-zheng-an/gulp-shell",
+  "homepage": "https://github.com/angieslist/gulp-shell",
   "devDependencies": {
     "chai": "~2.3.0",
     "coveralls": "~2.11.2",
