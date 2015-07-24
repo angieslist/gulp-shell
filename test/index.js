@@ -3,7 +3,8 @@
 var gutil = require('gulp-util')
 var join = require('path').join
 var expect = require('chai').expect
-
+var async = require('async')
+var sinon = require('sinon')
 var shell = require('..')
 
 var originalStdoutWrite = process.stdout.write
@@ -55,6 +56,12 @@ describe('gulp-shell(commands, options)', function () {
 
     expectToOutput(fakeFile.path, done)
 
+    stream.write(fakeFile)
+  })
+
+  it('can log with file data', function(done){
+    var stream = shell([''],{logMessage:'templating with <%= file.relative %>'})
+    expectToOutput('test-file',done)
     stream.write(fakeFile)
   })
 
@@ -142,6 +149,30 @@ describe('gulp-shell(commands, options)', function () {
           expect(error.message).to.equal(expectedMessage)
           done()
         })
+
+        stream.write(fakeFile)
+      })
+    })
+
+    describe('async', function () {
+      it('verifies tasks are run in parallel', function (done) {
+        var spy = sinon.spy(async,"parallel")
+        var stream = shell(['pwd', 'echo ls'])
+        stream.on('data', function () {
+          // get the first call's first argument, eg the array of functions to execute asynchronously
+          expect(spy.args[0][0].length == 2)
+          async.parallel.restore()
+          done()
+        })
+        stream.write(fakeFile)
+      })
+    })
+
+    describe('logMessage', function () {
+      it('sets the current working directory when `cwd` is a string and print a logMessage', function (done) {
+        var stream = shell(['pwd'], {cwd: '..', logMessage: 'building'})
+
+        expectToOutput(join(__dirname, '../..'), done)
 
         stream.write(fakeFile)
       })

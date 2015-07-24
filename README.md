@@ -1,26 +1,9 @@
 # gulp-shell
 
-[![NPM version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Coveralls Status][coveralls-image]][coveralls-url]
-[![Dependency Status][david-dm-image]][david-dm-url]
+> A handy command line interface for gulp now with asynchronous goodness
+> Forked from [gulp-shell](https://github.com/sun-zheng-an/gulp-shell)
 
-[npm-url]:         https://badge.fury.io/js/gulp-shell
-[npm-image]:       https://badge.fury.io/js/gulp-shell.png
-[travis-url]:      https://travis-ci.org/sun-zheng-an/gulp-shell
-[travis-image]:    https://travis-ci.org/sun-zheng-an/gulp-shell.png?branch=master
-[coveralls-url]:   https://coveralls.io/r/sun-zheng-an/gulp-shell
-[coveralls-image]: https://coveralls.io/repos/sun-zheng-an/gulp-shell/badge.png?branch=master
-[david-dm-url]:    https://david-dm.org/sun-zheng-an/gulp-shell
-[david-dm-image]:  https://david-dm.org/sun-zheng-an/gulp-shell.png?theme=shields.io
 
-> A handy command line interface for gulp
-
-## Installation
-
-```shell
-npm install --save-dev gulp-shell
-```
 
 ## Usage
 
@@ -137,3 +120,19 @@ By default, all the commands will be executed in an environment with all the var
 You can override any environment variables with this option.
 
 For example, setting it to `{PATH: process.env.PATH}` will reset the `PATH` if the default one brings your some troubles.
+
+#### options.logMessage
+
+type: `String`
+
+An easy way to print out a log statement when a task has finished. This can be a templated string using the file object or can be a normal string.
+
+```js
+shell(['pwd'], {logMessage:'Finished processing <%&= file.realtive %>'})
+```
+
+##Testing
+ Tests are in the test folder. They can be run with gulp
+ ```shell
+ gulp test
+```
